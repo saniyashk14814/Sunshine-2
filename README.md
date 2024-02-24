@@ -2,7 +2,7 @@
 
 Sunrise is a mobile platform designed to promote mental well-being and emotional support for youths in schools and colleges. It aims to be a positive and proactive companion in their fast-paced lives, offering a safe space to connect, reflect, and find encouragement.
 
-## Hackathon Project
+## NSBEHackS 2024 Project
 
 This project is currently in development for a hackathon. We're excited to contribute to solutions for youth mental health and showcase its potential for impact.
 
@@ -16,21 +16,19 @@ This project is currently in development for a hackathon. We're excited to contr
 
 ### Technologies:
 
-(Replace this section with the specific technologies used in your project, e.g., programming languages, frameworks, libraries)
+- FLutter
+- Firebase
+- Cohere Ai
+- Python
 
-### Contributing:
+ 
 
-We welcome contributions to further develop Sunrise! Feel free to:
-
-- Fork this repository and submit pull requests with your improvements.
-- Open issues for bugs or feature suggestions.
-- Join our discussions and share your ideas.
 
 ### License:
 
-(Specify the license under which you are releasing the project)
+MIT License
 
 ### Stay Connected:
 
-- **Website:** (if applicable)
-- **Social media:** (if applicable)
+- **Website:**  sunshine.com
+- **Social media:** sunshine
