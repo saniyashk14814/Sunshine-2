@@ -1,3 +1,4 @@
+import 'package:sunshine/Home%20Screens/homeScreen.dart';
 import 'package:sunshine/utils.dart';
 
 import 'package:sunshine/Onboarding Screens/Onboarding Views.dart';
@@ -7,7 +8,7 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
 
-  runApp(MainApp(onboardingCompleted: onboardingCompleted!));
+  runApp(MainApp(onboardingCompleted: onboardingCompleted));
 }
 /*
 void main()  {
@@ -34,7 +35,7 @@ class MainApp extends StatelessWidget {
       ),
       // initialRoute: Locale._cachedLocaleString == null ? '/onboarding' : '/home',
       // onGenerateRoute: RouteGenerator.generateRoute,
-      home: onboardingCompleted ? const OnboardingOne() : const OnboardingOne(),
+      home: HomeScreen(),
     );
   }
 }
