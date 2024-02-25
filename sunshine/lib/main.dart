@@ -1,4 +1,5 @@
 import 'package:sunshine/Home%20Screens/homeScreen.dart';
+import 'package:sunshine/Home%20Screens/tabbar.dart';
 import 'package:sunshine/utils.dart';
 
 import 'package:sunshine/Onboarding Screens/Onboarding Views.dart';
@@ -35,7 +36,7 @@ class MainApp extends StatelessWidget {
       ),
       // initialRoute: Locale._cachedLocaleString == null ? '/onboarding' : '/home',
       // onGenerateRoute: RouteGenerator.generateRoute,
-      home: HomeScreen(),
+      home: MyBottomNavigation(),
     );
   }
 }

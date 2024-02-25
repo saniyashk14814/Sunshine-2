@@ -193,101 +193,103 @@ class CheckinScreenTwo extends StatelessWidget {
 class CheckinScreenThree extends StatelessWidget {
   const CheckinScreenThree({super.key});
 
-  set _content(String _content) {}
+ 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: AppColors.background,
-        shape: BoxShape.rectangle,
-      ),
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          const PageIndicator(
-            pageno: 3,
-          ),
-          const SizedBox(height: 50),
-          Image.asset('assets/images/lumen.png', height: 175, width: 175),
-          const SizedBox(height: 40),
-          Text(
-            'Any other thing you want to\n tell me Robert? ',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.outfit(
-                fontWeight: FontWeight.w500,
-                fontSize: 28,
-                decoration: TextDecoration.none,
-                color: AppColors.black),
-          ),
-          const SizedBox(height: 2),
-          TextField(
-            maxLines: 8,
-            maxLength: 300,
-           
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: AppColors.white,
-                  width: 1,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                  width: 1,
-                ),
-              ),
-              hintText: 'Talk to me...',
-              hintStyle: GoogleFonts.outfit(
-                color: AppColors.grey,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                decoration: TextDecoration.none,
-              ),
-              contentPadding: const EdgeInsets.all(18),
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+          color: AppColors.background,
+          shape: BoxShape.rectangle,
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const PageIndicator(
+              pageno: 3,
             ),
-          ),
-          const SizedBox(height: 30),
-          MyButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CheckinScreenTwo(),
+            const SizedBox(height: 50),
+            Image.asset('assets/images/lumen.png', height: 175, width: 175),
+            const SizedBox(height: 40),
+            Text(
+              'Any other thing you want to\n tell me Robert? ',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.outfit(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 28,
+                  decoration: TextDecoration.none,
+                  color: AppColors.black),
+            ),
+            const SizedBox(height: 2),
+            TextField(
+              maxLines: 8,
+              maxLength: 300,
+             
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: AppColors.white,
+                    width: 1,
+                  ),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: AppColors.primary,
+                    width: 1,
+                  ),
+                ),
+                hintText: 'Talk to me...',
+                hintStyle: GoogleFonts.outfit(
+                  color: AppColors.grey,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  decoration: TextDecoration.none,
+                ),
+                contentPadding: const EdgeInsets.all(18),
+              ),
+            ),
+            const SizedBox(height: 30),
+            MyButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CheckinScreenTwo(),
+                  ),
+                );
+              },
+              text: 'Back',
+              color: AppColors.black,
+              bgcolor: AppColors.white,
+              fontsize: 20,
+              fontweight: FontWeight.normal,
+             
+            ),
+            const SizedBox(height: 10),
+            MyButton(
+              onPressed: () async {
+                 SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setBool('onboardingCompleted', true);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
               );
-            },
-            text: 'Back',
-            color: AppColors.black,
-            bgcolor: AppColors.white,
-            fontsize: 20,
-            fontweight: FontWeight.normal,
-           
-          ),
-          const SizedBox(height: 10),
-          MyButton(
-            onPressed: () async {
-               SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.setBool('onboardingCompleted', true);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
-            },
-            text: "Let's Continue",
-            color: AppColors.black,
-            bgcolor: AppColors.primary,
-            fontsize: 20,
-            fontweight: FontWeight.normal,
-           
-          ),
-        ],
+              },
+              text: "Let's Continue",
+              color: AppColors.black,
+              bgcolor: AppColors.primary,
+              fontsize: 20,
+              fontweight: FontWeight.normal,
+             
+            ),
+          ],
+        ),
       ),
     );
   }
