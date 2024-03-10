@@ -1,42 +1,20 @@
-import 'package:sunshine/Home%20Screens/homeScreen.dart';
-import 'package:sunshine/Home%20Screens/tabbar.dart';
-import 'package:sunshine/utils.dart';
+import 'package:flutter/material.dart';
 
-import 'package:sunshine/Onboarding Screens/Onboarding Views.dart';
+import 'src/app.dart';
+import 'src/settings/settings_controller.dart';
+import 'src/settings/settings_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool onboardingCompleted = prefs.getBool('onboardingCompleted') ?? false;
+  // Set up the SettingsController, which will glue user settings to multiple
+  // Flutter Widgets.
+  final settingsController = SettingsController(SettingsService());
 
-  runApp(MainApp(onboardingCompleted: onboardingCompleted));
-}
-/*
-void main()  {
-  runApp( const MainApp());
-}*/
+  // Load the user's preferred theme while the splash screen is displayed.
+  // This prevents a sudden theme change when the app is first displayed.
+  await settingsController.loadSettings();
 
-class MainApp extends StatelessWidget {
-  final bool onboardingCompleted;
-  const MainApp({Key? key, required this.onboardingCompleted})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: GoogleFonts.outfit().fontFamily,
-        textTheme: GoogleFonts.outfitTextTheme(),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.yellow)
-            .copyWith(
-                primary: AppColors.primary, secondary: AppColors.primaryvariant)
-            .copyWith(background: AppColors.background),
-      ),
-      // initialRoute: Locale._cachedLocaleString == null ? '/onboarding' : '/home',
-      // onGenerateRoute: RouteGenerator.generateRoute,
-      home: MyBottomNavigation(),
-    );
-  }
+  // Run the app and pass in the SettingsController. The app listens to the
+  // SettingsController for changes, then passes it further down to the
+  // SettingsView.
+  runApp(MyApp(settingsController: settingsController));
 }
