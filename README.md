@@ -28,7 +28,4 @@ This project is currently in development for a hackathon. We're excited to contr
 
 MIT License
 
-### Stay Connected:
 
-- **Website:**  sunshine.com
-- **Social media:** sunshine
