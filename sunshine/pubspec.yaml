@@ -10,10 +10,12 @@ environment:
   sdk: '>=3.1.2 <4.0.0'
 
 dependencies:
+  animate_do: ^3.3.4
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  solar_icons: ^0.0.5
 
 dev_dependencies:
   flutter_test:
@@ -21,7 +23,7 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   ionicons: ^0.2.2
-  google_fonts: ^6.1.0
+  google_fonts: ^5.1.0
   dio: ^4.0.0
   shimmer: ^2.0.0
   flutter_native_splash: ^1.2.1
@@ -38,7 +40,6 @@ flutter:
   generate: true
 
   assets:
-    # Add assets from the images directory to the application.
     - assets/images/
     - assets/icons/
 
