@@ -1,6 +1,7 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:sunshine/Core/Theme/utils.dart';
-import 'package:sunshine/Features/Onboarding/Onboarding-views.dart';
+import 'package:sunshine/Core/utils.dart';
+import 'package:sunshine/Features/Onboarding/onboarding_views.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

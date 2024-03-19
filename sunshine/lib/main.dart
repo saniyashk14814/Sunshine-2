@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sunshine/Features/Onboarding/SplashScreen.dart';
-import 'package:sunshine/Core/Theme/utils.dart';
+import 'package:sunshine/Features/Onboarding/splash_screen.dart';
+import 'package:sunshine/Core/utils.dart';
+import 'package:sunshine/firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 
@@ -16,21 +22,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: GoogleFonts.outfit().fontFamily,
-        textTheme: GoogleFonts.outfitTextTheme().copyWith(
-          displayLarge: GoogleFonts.outfit(),
-          displayMedium: GoogleFonts.outfit(),
-          displaySmall: GoogleFonts.outfit(),
-          headlineMedium: GoogleFonts.outfit(),
-          headlineSmall: GoogleFonts.outfit(),
-          titleLarge: GoogleFonts.outfit(),
-          titleMedium: GoogleFonts.outfit(),
-          titleSmall: GoogleFonts.outfit(),
-          bodyLarge: GoogleFonts.outfit(),
-          bodyMedium: GoogleFonts.outfit(),
-          labelLarge: GoogleFonts.outfit(),
-          bodySmall: GoogleFonts.outfit(),
-          labelSmall: GoogleFonts.outfit(),
-        ),
+        textTheme: GoogleFonts.outfitTextTheme().copyWith(),
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.yellow)
             .copyWith(primary: const Color(0xFFFFC800))
             .copyWith(background: const Color(0xFFFDFAEF)),

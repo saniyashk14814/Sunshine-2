@@ -1,7 +1,10 @@
-import 'package:sunshine/Core/Theme/utils.dart';
+import 'package:sunshine/Core/username_generator.dart';
+import 'package:sunshine/Core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:sunshine/Core/Theme/widgets.dart';
-import 'package:sunshine/Features/Onboarding/SplashScreen.dart';
+import 'package:sunshine/Core/widgets.dart';
+import 'package:sunshine/Features/Onboarding/newuser_dialogue.dart';
+import 'package:sunshine/Features/Onboarding/splash_screen.dart';
+import 'package:sunshine/Features/error_screen.dart';
 
 class OnboardingScreenOne extends StatelessWidget {
   const OnboardingScreenOne({super.key});
@@ -69,7 +72,7 @@ class OnboardingScreenOne extends StatelessWidget {
                 style: GoogleFonts.outfit(
                   color: AppColors.grey,
                   fontSize: 21.5,
-                  letterSpacing: 0.7,
+                  letterSpacing: 0.3,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.none,
                 ),
@@ -176,7 +179,7 @@ class OnboardingScreenTwo extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SplashScreen(),
+                      builder: (context) => OnboardingScreenThree(),
                     ),
                   );
                 },
@@ -186,5 +189,119 @@ class OnboardingScreenTwo extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class OnboardingScreenThree extends StatelessWidget {
+  OnboardingScreenThree({super.key});
+
+  final googleSignIn = GoogleSignIn();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData && getUsername() == '') {
+          // User not signed in, show onboarding screen
+          return onboardingContent(context);
+        } else {
+          // User signed in, navigate to OnboardingScreenOne
+          return const SplashScreen();
+        }
+      },
+    );
+  }
+
+  Widget onboardingContent(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/bg.png'),
+          opacity: 0.6,
+          fit: BoxFit.cover,
+        ),
+        color: AppColors.background,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 45),
+            FadeIn(
+              child: Image(
+                image: const AssetImage('assets/images/graphic.png'),
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+            const SizedBox(height: 30),
+            FadeInUp(
+              animate: true,
+              duration: const Duration(seconds: 1),
+              child: const TextWidget(
+                text:
+                    'We only care about your well-being so there’s no need for a login, we respect your health and privacy. Just authenticate your school account.',
+                color: AppColors.grey,
+                fontSize: 20,
+                textAlign: TextAlign.center,
+                fontWeight: FontWeight.w400,
+                height: 1.3,
+              ),
+            ),
+            const Spacer(),
+            Container(
+              margin: const EdgeInsets.only(bottom: 60),
+              child: FadeInUp(
+                animate: true,
+                duration: const Duration(seconds: 1),
+                child: ButtonWidget(
+                  text: "Authenticate",
+                  onPressed: () async {
+                    final userCredential = await _signInWithGoogle();
+                    final navigator = Navigator.of(context);
+                    if (userCredential != null) {
+                      // Navigate to desired screen on successful sign-in
+                      navigator.pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => NewUserDialogue(),
+                        ),
+                      );
+                    } else {
+                      // Handle sign-in failure
+                      navigator.pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const ErrorScreen(),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<UserCredential?> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      return await _auth.signInWithCredential(credential);
+    } catch (error) {
+      return null;
+    }
   }
 }

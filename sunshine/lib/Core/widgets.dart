@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sunshine/Core/Theme/utils.dart';
+import 'package:sunshine/Core/utils.dart';
 
 class TextWidget extends StatelessWidget {
   const TextWidget(
