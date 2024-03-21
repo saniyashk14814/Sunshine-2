@@ -43,11 +43,13 @@ class ButtonWidget extends StatelessWidget {
     this.textColor = AppColors.dark,
     this.fontSize = 20,
     this.fontWeight = FontWeight.w500,
+    this.bordercolor = AppColors.primary,
   });
 
   final String text;
   final Color color;
   final Color textColor;
+  final Color bordercolor;
   final double fontSize;
   final FontWeight fontWeight;
   final void Function() onPressed;
@@ -65,6 +67,10 @@ class ButtonWidget extends StatelessWidget {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(45),
+          side: BorderSide(
+            width: 1.5,
+            color: bordercolor,
+          ),
         ),
       ),
       child: TextWidget(

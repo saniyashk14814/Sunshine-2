@@ -2,8 +2,8 @@ import 'package:sunshine/Core/username_generator.dart';
 import 'package:sunshine/Core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:sunshine/Core/widgets.dart';
+import 'package:sunshine/Features/Check-In/checkin_views.dart';
 import 'package:sunshine/Features/Onboarding/newuser_dialogue.dart';
-import 'package:sunshine/Features/Onboarding/splash_screen.dart';
 import 'package:sunshine/Features/error_screen.dart';
 
 class OnboardingScreenOne extends StatelessWidget {
@@ -179,7 +179,7 @@ class OnboardingScreenTwo extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OnboardingScreenThree(),
+                      builder: (context) => const OnboardingScreenThree(),
                     ),
                   );
                 },
@@ -192,22 +192,51 @@ class OnboardingScreenTwo extends StatelessWidget {
   }
 }
 
-class OnboardingScreenThree extends StatelessWidget {
-  OnboardingScreenThree({super.key});
+class OnboardingScreenThree extends StatefulWidget {
+  const OnboardingScreenThree({super.key});
 
+  @override
+  State<OnboardingScreenThree> createState() => _OnboardingScreenThreeState();
+}
+
+class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
   final googleSignIn = GoogleSignIn();
+
+  String? username;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUsername();
+  }
+
+  Future<void> loadUsername() async {
+    username = await getUsername();
+    setState(() {}); // Notify the framework that the state has changed
+  }
+
+  Future<String?> usernameGen() async {
+    String? usernameFinal = await getUsername();
+    if (username == null) {
+      // Username not found, generate a new one
+      final newUsername = generateUsername();
+      await setUsername(newUsername);
+      username = newUsername;
+    }
+    return usernameFinal;
+  }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData && getUsername() == '') {
-          // User not signed in, show onboarding screen
+        if (!snapshot.hasData && username == '') {
+          // User not signed in and no username, show onboarding screen
           return onboardingContent(context);
         } else {
-          // User signed in, navigate to OnboardingScreenOne
-          return const SplashScreen();
+          // User signed in, navigate to CheckinScreenOne
+          return const CheckInScreenOne();
         }
       },
     );
@@ -260,11 +289,13 @@ class OnboardingScreenThree extends StatelessWidget {
                   onPressed: () async {
                     final userCredential = await _signInWithGoogle();
                     final navigator = Navigator.of(context);
+                    await usernameGen();
+
                     if (userCredential != null) {
                       // Navigate to desired screen on successful sign-in
                       navigator.pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => NewUserDialogue(),
+                          builder: (context) =>  NewUserDialogue(),
                         ),
                       );
                     } else {

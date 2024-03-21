@@ -1,4 +1,4 @@
-name: sunshine
+name: Sunshine
 description: A new Flutter project.
 
 # Prevent accidental publishing to pub.dev.
@@ -52,6 +52,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/images/mood/
 
 flutter_native_splash:
     color: "#FDFAEF"
