@@ -231,7 +231,7 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData && username == '') {
+        if (!snapshot.hasData && username == null) {
           // User not signed in and no username, show onboarding screen
           return onboardingContent(context);
         } else {
@@ -295,7 +295,7 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
                       // Navigate to desired screen on successful sign-in
                       navigator.pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) =>  NewUserDialogue(),
+                          builder: (context) => NewUserDialogue(),
                         ),
                       );
                     } else {

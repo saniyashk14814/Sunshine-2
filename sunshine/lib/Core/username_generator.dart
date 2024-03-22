@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String generateUsername() {
-  final characters =
+  const characters =
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-*&#';
-  final length = 9; // Adjust length as needed
+  const length = 9; // Adjust length as needed
 
   String username = '';
   for (var i = 0; i < length; i++) {

@@ -10,7 +10,7 @@ class PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 10,
       width: double.infinity,
       child: Row(
@@ -19,7 +19,7 @@ class PageIndicator extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
             height: 5,
-            width: MediaQuery.of(context).size.width / 3.9,
+            width: MediaQuery.of(context).size.width / 4,
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
@@ -210,13 +210,14 @@ class _CheckInScreenTwoState extends State<CheckInScreenTwo> {
           children: [
             const SizedBox(height: 20),
             const PageIndicator(currentPage: 1),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             Image.asset('assets/images/lumen.png', height: 150),
             const SizedBox(height: 30),
             const TextWidget(
                 text: 'What is causing your mood?',
                 fontSize: 23,
                 fontWeight: FontWeight.w500),
+            const SizedBox(height: 10),
             GridView.builder(
               shrinkWrap: true,
               itemCount: 9,
@@ -260,9 +261,14 @@ class _CheckInScreenTwoState extends State<CheckInScreenTwo> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.04),
             ButtonWidget(
-              text: "Back",
+              text: "Skip",
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CheckInScreenThree(),
+                  ),
+                );
               },
               bordercolor: const Color(0xFFC0D8F2),
               color: AppColors.lightGrey,
